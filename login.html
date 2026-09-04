@@ -13,31 +13,44 @@
     <form id="loginForm" class="space-y-3 text-xs">
       <div>
         <label class="block text-gray-400 mb-1">ইমেইল</label>
-        <input id="email" type="email" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <input id="email" type="email" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
       <div>
         <label class="block text-gray-400 mb-1">পাসওয়ার্ড</label>
-        <input id="password" type="password" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <input id="password" type="password" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
-      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-lg font-semibold transition">লগইন</button>
+      <button id="loginBtn" type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-lg font-semibold transition">লগইন</button>
     </form>
     <p class="text-center text-xs text-gray-500">নতুন ইউজার? <a href="register.html" class="text-purple-400">অ্যাকাউন্ট খুলুন</a></p>
   </div>
 
   <script>
     const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_PQsSa5bEWzqdoTuDxKVsyw_ODkUA6TF";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZXRjY3Jla21uZXJ1emlwb2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MjY5NzEsImV4cCI6MjEwNDEwMjk3MX0.OKWuAKrqzc2JM9jeZSvtGg1BOmLEqF3-MLl_1QliAu8";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById("email").value;
+      
+      const loginBtn = document.getElementById("loginBtn");
+      loginBtn.disabled = true;
+      loginBtn.innerText = "লগইন হচ্ছে...";
+
+      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) return alert(error.message);
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        alert("লগইন এরর: " + error.message);
+        loginBtn.disabled = false;
+        loginBtn.innerText = "লগইন";
+        return;
+      }
 
-      window.location.href = "index.html";
+      if (data?.session) {
+        window.location.replace("index.html");
+      }
     });
   </script>
 </body>
