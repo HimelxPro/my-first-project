@@ -134,11 +134,11 @@
         <form onsubmit="submitDeposit(event)" class="space-y-2 text-xs">
           <div>
             <label class="text-gray-400 block mb-1">যে নম্বর থেকে টাকা পাঠাবেন</label>
-            <input id="senderNum" type="text" placeholder="01XXXXXXXXX" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white">
+            <input id="senderNum" type="text" placeholder="01XXXXXXXXX" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white outline-none">
           </div>
           <div>
             <label class="text-gray-400 block mb-1">TrxID</label>
-            <input id="trxId" type="text" placeholder="TrxID দিন" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white uppercase">
+            <input id="trxId" type="text" placeholder="TrxID দিন" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white uppercase outline-none">
           </div>
           <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition">পেমেন্ট নিশ্চিত করুন</button>
         </form>
@@ -163,20 +163,41 @@
     </div>
   </div>
 
-  <script type="module">
-    import { services } from './js/services.js';
-
-    // সঠিক URL এবং Key
+  <script>
+    // Supabase সেটআপ
     const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZXRjY3Jla21uZXJ1emlwb2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MjY5NzEsImV4cCI6MjEwNDEwMjk3MX0.OKWuAKrqzc2JM9jeZSvtGg1BOmLEqF3-MLl_1QliAu8";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // সার্ভিসের কমপ্লিট তালিকা (১০টি সক্রিয় + ৩০টি ড্রাফট)
+    const services = [
+      { id: 1, name: "সার্ভার কপি ভেরিফাই", price: 500, active: true, desc: "সার্ভার কপির অফিসিয়াল ডেটা ইনস্ট্যান্ট যাচাই ও রিপোর্ট ডাউনলোড।" },
+      { id: 2, name: "টিন সার্টিফিকেট যাচাই", price: 500, active: true, desc: "ই-টিন সংক্রান্ত ডেটা চেক এবং ভেরিফিকেশন স্লিপ তৈরি।" },
+      { id: 3, name: "আইডি কার্ড ডেটা ভিউ", price: 1000, active: true, desc: "স্মার্টকার্ড সংক্রান্ত ডেটাবেজ মিলকরণ ও ভিউ।" },
+      { id: 4, name: "বায়োমেট্রিক রেকর্ড চেক", price: 1000, active: true, desc: "সিস্টেমের বায়োমেট্রিক স্ট্যাটাস অনুসন্ধান।" },
+      { id: 5, name: "পাসপোর্ট ফাইল আপডেট", price: 500, active: true, desc: "পাসপোর্ট ভেরিফিকেশন ও ডেলিভারি অগ্রগতি যাচাই।" },
+      { id: 6, name: "ড্রাইভিং লাইসেন্স ভেরিফাই", price: 1500, active: true, desc: "বিআরটিএ লাইসেন্স সংক্রান্ত ডেটাবেজ অনুসন্ধান।" },
+      { id: 7, name: "ট্রেড লাইসেন্স ভেরিফিকেশন", price: 1000, active: true, desc: "ব্যবসা ও ট্রেড লাইসেন্স অনলাইন রেকর্ড চেক।" },
+      { id: 8, name: "জন্ম নিবন্ধন ডেটা চেক", price: 500, active: true, desc: "অনলাইন জন্ম নিবন্ধন তথ্যাদি যাচাই।" },
+      { id: 9, name: "ল্যান্ড রেকর্ড ভেরিফাই", price: 1500, active: true, desc: "অনলাইন ভূমি রেকর্ড ও খতিয়ান সংক্রান্ত ডেটা সার্চ।" },
+      { id: 10, name: "ক্লিয়ারেন্স ফাইল রিপোর্ট", price: 1500, active: true, desc: "ভেরিফিকেশন ফাইলের সর্বশেষ স্ট্যাটাস চেকিং।" }
+    ];
+
+    for(let i = 11; i <= 40; i++) {
+      services.push({
+        id: i,
+        name: `আসন্ন সার্ভিস ${i}`,
+        price: 500,
+        active: false,
+        desc: "এই সার্ভিসটি শীঘ্রই চালু করা হবে।"
+      });
+    }
 
     let userBalance = 0;
     let selectedPkg = 500;
     let currentUser = null;
 
     async function init() {
-      // সেশন চেক
       const { data: { session } } = await supabase.auth.getSession();
       if (!session || !session.user) {
         window.location.replace("login.html");
@@ -184,9 +205,7 @@
       }
       currentUser = session.user;
 
-      // প্রোফাইল ডাটা লোড
-      const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
-      
+      const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
       if (profile) {
         userBalance = Number(profile.balance) || 0;
         document.getElementById("userName").innerText = profile.full_name || "ইউজার";
@@ -232,7 +251,7 @@
       });
     }
 
-    window.runService = async (id) => {
+    window.runService = async function(id) {
       const srv = services.find(s => s.id === id);
       if (!srv.active) return alert("সার্ভিসটি সাময়িক বন্ধ আছে।");
       if (userBalance < srv.price) return openDeposit(srv.price);
@@ -255,16 +274,18 @@
       }
     };
 
-    window.openDeposit = (amt) => {
+    window.openDeposit = function(amt) {
       setPkg(amt);
       document.getElementById("depositFormStep").classList.remove("hidden");
       document.getElementById("depositPendingStep").classList.add("hidden");
       document.getElementById("depositModal").classList.remove("hidden");
     };
 
-    window.closeDeposit = () => document.getElementById("depositModal").classList.add("hidden");
+    window.closeDeposit = function() {
+      document.getElementById("depositModal").classList.add("hidden");
+    };
 
-    window.setPkg = (amt) => {
+    window.setPkg = function(amt) {
       selectedPkg = amt;
       document.getElementById("payAmt").innerText = amt;
       document.querySelectorAll(".pkg-opt").forEach(btn => {
@@ -273,12 +294,12 @@
       });
     };
 
-    window.copyAdminNumber = () => {
+    window.copyAdminNumber = function() {
       navigator.clipboard.writeText(document.getElementById("adminNumber").innerText);
       alert("নম্বর কপি হয়েছে!");
     };
 
-    window.showInfo = (id) => {
+    window.showInfo = function(id) {
       const srv = services.find(s => s.id === id);
       document.getElementById("infoTitle").innerText = srv.name;
       document.getElementById("infoPrice").innerText = `চার্জ: ৳ ${srv.price}`;
@@ -286,7 +307,7 @@
       document.getElementById("infoModal").classList.remove("hidden");
     };
 
-    window.submitDeposit = async (e) => {
+    window.submitDeposit = async function(e) {
       e.preventDefault();
       const phone = document.getElementById("senderNum").value;
       const trx = document.getElementById("trxId").value;
@@ -318,7 +339,7 @@
       }, 4000);
     };
 
-    window.buyResellerAccess = async () => {
+    window.buyResellerAccess = async function() {
       const FEE = 15000;
       if (userBalance < FEE) {
         alert("রিসেলার লাইসেন্স কিনতে নূন্যতম ১৫,০০০ টাকা ওয়ালেট ব্যালেন্স থাকতে হবে।");
@@ -332,13 +353,16 @@
       init();
     };
 
-    window.copyApiKey = () => {
+    window.copyApiKey = function() {
       navigator.clipboard.writeText(document.getElementById("userApiKey").innerText);
       alert("API Key কপি হয়েছে!");
     };
 
-    window.toggleSidebar = () => document.getElementById("sidebar").classList.toggle("hidden");
-    window.logout = async () => {
+    window.toggleSidebar = function() {
+      document.getElementById("sidebar").classList.toggle("hidden");
+    };
+
+    window.logout = async function() {
       await supabase.auth.signOut();
       window.location.replace("login.html");
     };
