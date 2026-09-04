@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রেজিস্ট্রেশন</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-950 text-white flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-sm bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-4">
+    <h2 class="text-xl font-bold text-center text-purple-400">রেজিস্ট্রেশন করুন</h2>
+    <form id="regForm" class="space-y-3 text-xs">
+      <div>
+        <label class="block text-gray-400 mb-1">পূর্ণ নাম</label>
+        <input id="name" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">হোয়াটসঅ্যাপ নম্বর</label>
+        <input id="whatsapp" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">ইমেইল অ্যাড্রেস</label>
+        <input id="email" type="email" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+      </div>
+      <div>
+        <label class="block text-gray-400 mb-1">পাসওয়ার্ড</label>
+        <input id="password" type="password" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+      </div>
+      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-lg font-semibold transition">সাইন আপ</button>
+    </form>
+    <p class="text-center text-xs text-gray-500">অ্যাকাউন্ট আছে? <a href="login.html" class="text-purple-400">লগইন করুন</a></p>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co/rest/v1/";
+    const SUPABASE_KEY = "sb_publishable_PQsSa5bEWzqdoTuDxKVsyw_ODkUA6TF";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById("regForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const full_name = document.getElementById("name").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) return alert(error.message);
+
+      await supabase.from("profiles").insert([{ id: data.user.id, full_name, whatsapp, balance: 0 }]);
+      alert("রেজিস্ট্রেশন সফল হয়েছে! দয়া করে লগইন করুন।");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
