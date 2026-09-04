@@ -13,42 +13,80 @@
     <form id="regForm" class="space-y-3 text-xs">
       <div>
         <label class="block text-gray-400 mb-1">পূর্ণ নাম</label>
-        <input id="name" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <input id="name" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
       <div>
-        <label class="block text-gray-400 mb-1">হোয়াটসঅ্যাপ নম্বর</label>
-        <input id="whatsapp" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <label class="block text-gray-400 mb-1">হোয়াটসঅ্যাপ নম্বর</label>
+        <input id="whatsapp" type="text" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
       <div>
         <label class="block text-gray-400 mb-1">ইমেইল অ্যাড্রেস</label>
-        <input id="email" type="email" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <input id="email" type="email" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
       <div>
-        <label class="block text-gray-400 mb-1">পাসওয়ার্ড</label>
-        <input id="password" type="password" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white">
+        <label class="block text-gray-400 mb-1">পাসওয়ার্ড</label>
+        <input id="password" type="password" required class="w-full bg-gray-950 border border-gray-800 p-2.5 rounded-lg text-white outline-none focus:border-purple-500">
       </div>
-      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-lg font-semibold transition">সাইন আপ</button>
+      <button id="submitBtn" type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-lg font-semibold transition">সাইন আপ</button>
     </form>
     <p class="text-center text-xs text-gray-500">অ্যাকাউন্ট আছে? <a href="login.html" class="text-purple-400">লগইন করুন</a></p>
   </div>
 
   <script>
     const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_PQsSa5bEWzqdoTuDxKVsyw_ODkUA6TF";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZXRjY3Jla21uZXJ1emlwb2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MjY5NzEsImV4cCI6MjEwNDEwMjk3MX0.OKWuAKrqzc2JM9jeZSvtGg1BOmLEqF3-MLl_1QliAu8";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     document.getElementById("regForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById("email").value;
+      
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.innerText = "অপেক্ষা করুন...";
+
+      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-      const full_name = document.getElementById("name").value;
-      const whatsapp = document.getElementById("whatsapp").value;
+      const full_name = document.getElementById("name").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) return alert(error.message);
+      // ১. Supabase Auth এ সাইন-আপ
+      const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+        email,
+        password
+      });
 
-      await supabase.from("profiles").insert([{ id: data.user.id, full_name, whatsapp, balance: 0 }]);
-      alert("রেজিস্ট্রেশন সফল হয়েছে! দয়া করে লগইন করুন।");
+      if (authError) {
+        alert("অথেন্টিকেশন এরর: " + authError.message);
+        submitBtn.disabled = false;
+        submitBtn.innerText = "সাইন আপ";
+        return;
+      }
+
+      if (!authData?.user) {
+        alert("ইউজার তৈরি হয়নি। Supabase থেকে Email Confirmation বন্ধ করুন।");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "সাইন আপ";
+        return;
+      }
+
+      // ২. profiles টেবিলে প্রোফাইল ডাটা যুক্ত করা
+      const { error: profileError } = await supabaseClient.from("profiles").insert([
+        { 
+          id: authData.user.id, 
+          full_name, 
+          whatsapp, 
+          balance: 0 
+        }
+      ]);
+
+      if (profileError) {
+        alert("প্রোফাইল টেবিল এরর: " + profileError.message);
+        submitBtn.disabled = false;
+        submitBtn.innerText = "সাইন আপ";
+        return;
+      }
+
+      alert("রেজিস্ট্রেশন সফল হয়েছে! লগইন পেজে নিয়ে যাওয়া হচ্ছে...");
       window.location.href = "login.html";
     });
   </script>
