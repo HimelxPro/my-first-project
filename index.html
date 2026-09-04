@@ -13,10 +13,10 @@
   <header class="md:hidden flex items-center justify-between p-4 bg-gray-900 border-b border-gray-800">
     <span class="font-bold text-sm text-purple-400">সার্ভিস পোর্টাল</span>
     <div class="flex items-center gap-2">
-      <button onclick="openDeposit(500)" class="bg-purple-600/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">
+      <button onclick="window.openDeposit(500)" class="bg-purple-600/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">
         ৳ <span class="wallet-val">0.00</span> ＋
       </button>
-      <button onclick="toggleSidebar()" class="text-gray-400 text-lg">☰</button>
+      <button onclick="window.toggleSidebar()" class="text-gray-400 text-lg">☰</button>
     </div>
   </header>
 
@@ -24,12 +24,12 @@
   <aside id="sidebar" class="hidden md:flex flex-col w-64 bg-gray-900 border-r border-gray-800 p-5 space-y-6 shrink-0 fixed md:static inset-y-0 left-0 z-50">
     <div class="flex items-center justify-between">
       <h2 class="text-lg font-bold text-purple-400">Dashboard</h2>
-      <button onclick="toggleSidebar()" class="md:hidden text-gray-400">✕</button>
+      <button onclick="window.toggleSidebar()" class="md:hidden text-gray-400">✕</button>
     </div>
     <nav class="space-y-2 text-xs">
       <a href="#" class="block bg-purple-600/20 text-purple-400 px-3 py-2 rounded-lg font-medium">🏠 ড্যাশবোর্ড হোম</a>
-      <a href="#" onclick="openDeposit(500)" class="block text-gray-400 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-lg">💳 ব্যালেন্স রিচার্জ</a>
-      <button onclick="logout()" class="w-full text-left text-red-400 hover:bg-gray-800 px-3 py-2 rounded-lg">🚪 লগআউট</button>
+      <button onclick="window.openDeposit(500)" class="w-full text-left text-gray-400 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-lg">💳 ব্যালেন্স রিচার্জ</button>
+      <button onclick="window.logout()" class="w-full text-left text-red-400 hover:bg-gray-800 px-3 py-2 rounded-lg">🚪 লগআউট</button>
     </nav>
   </aside>
 
@@ -41,7 +41,7 @@
         <h1 class="text-sm font-semibold text-white">স্বাগতম, <span id="userName">ইউজার</span></h1>
         <p class="text-xs text-gray-400">আপনার ডিজিটাল সার্ভিস অ্যাকাউন্ট</p>
       </div>
-      <div onclick="openDeposit(500)" class="cursor-pointer bg-gray-950 border border-gray-800 px-4 py-2 rounded-xl flex items-center gap-3 hover:border-purple-500 transition" title="রিচার্জ করতে ক্লিক করুন">
+      <div onclick="window.openDeposit(500)" class="cursor-pointer bg-gray-950 border border-gray-800 px-4 py-2 rounded-xl flex items-center gap-3 hover:border-purple-500 transition" title="রিচার্জ করতে ক্লিক করুন">
         <div class="text-right">
           <span class="text-[11px] text-gray-400">ওয়ালেট ব্যালেন্স ➕</span>
           <p class="text-sm font-bold text-green-400">৳ <span class="wallet-val">0.00</span></p>
@@ -82,7 +82,7 @@
 
       <div id="buyApiKeyBox" class="border-t border-gray-800 pt-3 flex items-center justify-between">
         <p class="text-xs text-gray-400">পর্যাপ্ত ব্যালেন্স থাকলে এক ক্লিকে লাইসেন্স সক্রিয় করুন।</p>
-        <button onclick="buyResellerAccess()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded-xl transition">
+        <button onclick="window.buyResellerAccess()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded-xl transition">
           🔑 ৳১৫,০০০ দিয়ে কি কিনুন
         </button>
       </div>
@@ -93,7 +93,7 @@
             <span class="text-[10px] text-gray-500 block">আপনার কাস্টম এপিআই কি:</span>
             <span id="userApiKey" class="font-mono text-xs font-semibold text-green-400">sk_live_...</span>
           </div>
-          <button onclick="copyApiKey()" class="text-xs bg-gray-800 text-purple-300 px-3 py-1.5 rounded-lg border border-gray-700">কপি কি</button>
+          <button onclick="window.copyApiKey()" class="text-xs bg-gray-800 text-purple-300 px-3 py-1.5 rounded-lg border border-gray-700">কপি কি</button>
         </div>
         <div class="bg-gray-950/60 p-3 rounded-xl border border-gray-850 text-[11px] text-gray-400 space-y-1">
           <p class="font-semibold text-gray-300">API Endpoint:</p>
@@ -107,16 +107,16 @@
   <!-- রিচার্জ গেটওয়ে মডাল -->
   <div id="depositModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
     <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-sm p-5 relative">
-      <button onclick="closeDeposit()" class="absolute top-3 right-3 text-gray-400 hover:text-white">✕</button>
+      <button onclick="window.closeDeposit()" class="absolute top-3 right-3 text-gray-400 hover:text-white">✕</button>
 
       <div id="depositFormStep">
         <h3 class="text-sm font-bold text-white mb-1">ব্যালেন্স রিচার্জ করুন</h3>
         <p class="text-[11px] text-gray-400 mb-3">প্যাকেজ নির্বাচন করে Send Money সম্পন্ন করুন।</p>
 
         <div class="grid grid-cols-3 gap-2 mb-3">
-          <button type="button" onclick="setPkg(500)" class="pkg-opt border border-purple-500 bg-purple-600/20 text-purple-300 py-1.5 rounded-lg text-xs font-bold" data-amt="500">৳ ৫০০</button>
-          <button type="button" onclick="setPkg(1000)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1000">৳ ১০০০</button>
-          <button type="button" onclick="setPkg(1500)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1500">৳ ১৫০০</button>
+          <button type="button" onclick="window.setPkg(500)" class="pkg-opt border border-purple-500 bg-purple-600/20 text-purple-300 py-1.5 rounded-lg text-xs font-bold" data-amt="500">৳ ৫০০</button>
+          <button type="button" onclick="window.setPkg(1000)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1000">৳ ১০০০</button>
+          <button type="button" onclick="window.setPkg(1500)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1500">৳ ১৫০০</button>
         </div>
 
         <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl mb-3 text-xs space-y-1">
@@ -126,12 +126,12 @@
           </div>
           <div class="flex justify-between items-center bg-gray-900 p-2 rounded">
             <span id="adminNumber" class="font-mono text-white text-xs">017XXXXXXXX</span>
-            <button onclick="copyAdminNumber()" class="text-purple-400 hover:text-purple-300 text-xs">কপি</button>
+            <button onclick="window.copyAdminNumber()" class="text-purple-400 hover:text-purple-300 text-xs">কপি</button>
           </div>
           <p class="text-[11px] text-gray-500">পরিশোধের পরিমাণ: ৳ <span id="payAmt">500</span></p>
         </div>
 
-        <form onsubmit="submitDeposit(event)" class="space-y-2 text-xs">
+        <form onsubmit="window.submitDeposit(event)" class="space-y-2 text-xs">
           <div>
             <label class="text-gray-400 block mb-1">যে নম্বর থেকে টাকা পাঠাবেন</label>
             <input id="senderNum" type="text" placeholder="01XXXXXXXXX" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white outline-none">
@@ -147,8 +147,8 @@
       <div id="depositPendingStep" class="hidden text-center py-4 space-y-3">
         <div class="w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
         <h4 class="text-xs font-bold text-yellow-400">পেমেন্ট রিকোয়েস্ট পেন্ডিং আছে</h4>
-        <p class="text-[11px] text-gray-400">ভেরিফিকেশন পাঠানো হয়েছে। অপেক্ষা করুন ৫ মিনিটের মধ্যে কনফার্ম করা হবে।</p>
-        <button onclick="closeDeposit()" class="w-full bg-gray-800 text-gray-300 text-xs py-1.5 rounded-lg">পপআপ বন্ধ করুন</button>
+        <p class="text-[11px] text-gray-400">ভেরিফিকেশন পাঠানো হয়েছে। অ্যাডমিন কনফার্ম করলেই ব্যালেন্স যুক্ত হবে।</p>
+        <button onclick="window.closeDeposit()" class="w-full bg-gray-800 text-gray-300 text-xs py-1.5 rounded-lg">পপআপ বন্ধ করুন</button>
       </div>
     </div>
   </div>
@@ -156,7 +156,7 @@
   <!-- ইনফো মডাল -->
   <div id="infoModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
     <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xs p-5 relative">
-      <button onclick="document.getElementById('infoModal').classList.add('hidden')" class="absolute top-3 right-3 text-gray-400">✕</button>
+      <button onclick="window.closeInfo()" class="absolute top-3 right-3 text-gray-400">✕</button>
       <h3 id="infoTitle" class="text-xs font-bold text-white mb-1"></h3>
       <span id="infoPrice" class="text-[11px] text-purple-400 font-semibold block mb-2"></span>
       <p id="infoBody" class="text-xs text-gray-300 bg-gray-950 p-3 rounded-lg border border-gray-800"></p>
@@ -164,13 +164,11 @@
   </div>
 
   <script>
-    // Supabase সেটআপ
     const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZXRjY3Jla21uZXJ1emlwb2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MjY5NzEsImV4cCI6MjEwNDEwMjk3MX0.OKWuAKrqzc2JM9jeZSvtGg1BOmLEqF3-MLl_1QliAu8";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // সার্ভিসের কমপ্লিট তালিকা (১০টি সক্রিয় + ৩০টি ড্রাফট)
-    const services = [
+    const servicesList = [
       { id: 1, name: "সার্ভার কপি ভেরিফাই", price: 500, active: true, desc: "সার্ভার কপির অফিসিয়াল ডেটা ইনস্ট্যান্ট যাচাই ও রিপোর্ট ডাউনলোড।" },
       { id: 2, name: "টিন সার্টিফিকেট যাচাই", price: 500, active: true, desc: "ই-টিন সংক্রান্ত ডেটা চেক এবং ভেরিফিকেশন স্লিপ তৈরি।" },
       { id: 3, name: "আইডি কার্ড ডেটা ভিউ", price: 1000, active: true, desc: "স্মার্টকার্ড সংক্রান্ত ডেটাবেজ মিলকরণ ও ভিউ।" },
@@ -184,7 +182,7 @@
     ];
 
     for(let i = 11; i <= 40; i++) {
-      services.push({
+      servicesList.push({
         id: i,
         name: `আসন্ন সার্ভিস ${i}`,
         price: 500,
@@ -197,33 +195,14 @@
     let selectedPkg = 500;
     let currentUser = null;
 
-    async function init() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session || !session.user) {
-        window.location.replace("login.html");
-        return;
-      }
-      currentUser = session.user;
-
-      const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
-      if (profile) {
-        userBalance = Number(profile.balance) || 0;
-        document.getElementById("userName").innerText = profile.full_name || "ইউজার";
-        if (profile.is_reseller) {
-          document.getElementById("buyApiKeyBox").classList.add("hidden");
-          document.getElementById("resellerKeyBox").classList.remove("hidden");
-          document.getElementById("userApiKey").innerText = profile.api_key;
-        }
-      }
-      render();
-    }
-
-    function render() {
+    // ১. সার্ভিস রেন্ডার ফাংশন
+    function renderServices() {
       document.querySelectorAll(".wallet-val").forEach(el => el.innerText = userBalance.toFixed(2));
       const grid = document.getElementById("serviceGrid");
+      if (!grid) return;
       grid.innerHTML = "";
 
-      services.forEach(srv => {
+      servicesList.forEach(srv => {
         const locked = !srv.active || userBalance < srv.price;
         const card = document.createElement("div");
         card.className = `p-3 rounded-xl border flex flex-col justify-between ${locked ? 'bg-gray-900/40 border-gray-800' : 'bg-gray-900 border-gray-700 hover:border-purple-500'}`;
@@ -232,7 +211,7 @@
             <div class="flex justify-between items-center mb-2">
               <span class="text-xs">${srv.active ? '⚡' : '⏳'}</span>
               <div class="flex items-center gap-1">
-                <button onclick="showInfo(${srv.id})" class="text-[10px] bg-gray-800 border border-gray-700 px-1 rounded text-gray-400">ⓘ</button>
+                <button onclick="window.showInfo(${srv.id})" class="text-[10px] bg-gray-800 border border-gray-700 px-1 rounded text-gray-400">ⓘ</button>
                 <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${locked ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}">
                   ${locked ? 'লকড 🔒' : 'আনলক 🔓'}
                 </span>
@@ -242,7 +221,7 @@
           </div>
           <div class="mt-3 pt-2 border-t border-gray-800 flex justify-between items-center">
             <span class="text-xs text-purple-400 font-bold">৳ ${srv.price}</span>
-            <button onclick="runService(${srv.id})" class="text-[10px] px-2 py-1 rounded ${locked ? 'bg-gray-800 text-gray-400' : 'bg-purple-600 text-white'}">
+            <button onclick="window.runService(${srv.id})" class="text-[10px] px-2 py-1 rounded ${locked ? 'bg-gray-800 text-gray-400' : 'bg-purple-600 text-white'}">
               ${locked ? 'রিচার্জ' : 'ব্যবহার করুন'}
             </button>
           </div>
@@ -251,31 +230,9 @@
       });
     }
 
-    window.runService = async function(id) {
-      const srv = services.find(s => s.id === id);
-      if (!srv.active) return alert("সার্ভিসটি সাময়িক বন্ধ আছে।");
-      if (userBalance < srv.price) return openDeposit(srv.price);
-
-      const res = await fetch('/api/service', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: currentUser.id, serviceId: id, price: srv.price })
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        userBalance -= srv.price;
-        render();
-        document.getElementById("resultText").innerText = `${srv.name} সম্পন্ন হয়েছে। ৳${srv.price} ব্যালেন্স থেকে কাটা হয়েছে।`;
-        document.getElementById("downloadBtn").href = data.pdfUrl || "#";
-        document.getElementById("resultCard").classList.remove("hidden");
-      } else {
-        alert(data.error || "সার্ভিসটি সম্পন্ন করা যায়নি।");
-      }
-    };
-
+    // উইন্ডো ফাংশনসমূহ বাইন্ডিং
     window.openDeposit = function(amt) {
-      setPkg(amt);
+      window.setPkg(amt);
       document.getElementById("depositFormStep").classList.remove("hidden");
       document.getElementById("depositPendingStep").classList.add("hidden");
       document.getElementById("depositModal").classList.remove("hidden");
@@ -283,6 +240,10 @@
 
     window.closeDeposit = function() {
       document.getElementById("depositModal").classList.add("hidden");
+    };
+
+    window.closeInfo = function() {
+      document.getElementById("infoModal").classList.add("hidden");
     };
 
     window.setPkg = function(amt) {
@@ -300,7 +261,7 @@
     };
 
     window.showInfo = function(id) {
-      const srv = services.find(s => s.id === id);
+      const srv = servicesList.find(s => s.id === id);
       document.getElementById("infoTitle").innerText = srv.name;
       document.getElementById("infoPrice").innerText = `চার্জ: ৳ ${srv.price}`;
       document.getElementById("infoBody").innerText = srv.desc;
@@ -315,42 +276,73 @@
       document.getElementById("depositFormStep").classList.add("hidden");
       document.getElementById("depositPendingStep").classList.remove("hidden");
 
-      await fetch('/api/deposit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: currentUser.id,
-          userName: document.getElementById("userName").innerText,
-          amount: selectedPkg,
-          phone,
-          trxId: trx
-        })
-      });
+      try {
+        await fetch('/api/deposit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: currentUser ? currentUser.id : "test_user",
+            userName: document.getElementById("userName").innerText,
+            amount: selectedPkg,
+            phone,
+            trxId: trx
+          })
+        });
+      } catch (err) {
+        console.error("Deposit API error:", err);
+      }
 
       const timer = setInterval(async () => {
-        const { data } = await supabase.from('deposits').select('status').eq('trx_id', trx).single();
+        const { data } = await supabaseClient.from('deposits').select('status').eq('trx_id', trx).single();
         if (data && data.status === 'approved') {
           clearInterval(timer);
           userBalance += selectedPkg;
-          render();
-          closeDeposit();
+          renderServices();
+          window.closeDeposit();
           alert("অভিনন্দন! আপনার রিচার্জ অনুমোদন পেয়েছে।");
         }
       }, 4000);
+    };
+
+    window.runService = async function(id) {
+      const srv = servicesList.find(s => s.id === id);
+      if (!srv.active) return alert("সার্ভিসটি সাময়িক বন্ধ আছে।");
+      if (userBalance < srv.price) return window.openDeposit(srv.price);
+
+      try {
+        const res = await fetch('/api/service', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser.id, serviceId: id, price: srv.price })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          userBalance -= srv.price;
+          renderServices();
+          document.getElementById("resultText").innerText = `${srv.name} সম্পন্ন হয়েছে। ৳${srv.price} ব্যালেন্স থেকে কাটা হয়েছে।`;
+          document.getElementById("downloadBtn").href = data.pdfUrl || "#";
+          document.getElementById("resultCard").classList.remove("hidden");
+        } else {
+          alert(data.error || "সার্ভিস সম্পন্ন করা যায়নি।");
+        }
+      } catch (err) {
+        alert("সার্ভার রিকোয়েস্টে সমস্যা হয়েছে।");
+      }
     };
 
     window.buyResellerAccess = async function() {
       const FEE = 15000;
       if (userBalance < FEE) {
         alert("রিসেলার লাইসেন্স কিনতে নূন্যতম ১৫,০০০ টাকা ওয়ালেট ব্যালেন্স থাকতে হবে।");
-        openDeposit(FEE);
+        window.openDeposit(FEE);
         return;
       }
       const newKey = "sk_live_" + Math.random().toString(36).substring(2) + Date.now().toString(36);
-      await supabase.from('profiles').update({ balance: userBalance - FEE, is_reseller: true, api_key: newKey }).eq('id', currentUser.id);
+      await supabaseClient.from('profiles').update({ balance: userBalance - FEE, is_reseller: true, api_key: newKey }).eq('id', currentUser.id);
       userBalance -= FEE;
-      render();
-      init();
+      renderServices();
+      initDashboard();
     };
 
     window.copyApiKey = function() {
@@ -363,11 +355,42 @@
     };
 
     window.logout = async function() {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       window.location.replace("login.html");
     };
 
-    init();
+    // ২. ড্যাশবোর্ড ডাটা লোডার
+    async function initDashboard() {
+      // সার্ভিস গ্রিডকে তাৎক্ষণিক লোড করানো
+      renderServices();
+
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session || !session.user) {
+          window.location.replace("login.html");
+          return;
+        }
+        currentUser = session.user;
+
+        const { data: profile } = await supabaseClient.from('profiles').select('*').eq('id', currentUser.id).single();
+        if (profile) {
+          userBalance = Number(profile.balance) || 0;
+          document.getElementById("userName").innerText = profile.full_name || "ইউজার";
+          if (profile.is_reseller) {
+            document.getElementById("buyApiKeyBox").classList.add("hidden");
+            document.getElementById("resellerKeyBox").classList.remove("hidden");
+            document.getElementById("userApiKey").innerText = profile.api_key;
+          }
+          // ব্যালেন্স আপডেট করে পুনরায় গ্রিড রিফ্রেশ
+          renderServices();
+        }
+      } catch (e) {
+        console.error("Dashboard Init Error:", e);
+      }
+    }
+
+    // স্টার্ট করা
+    initDashboard();
   </script>
 </body>
 </html>
