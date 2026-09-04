@@ -3,188 +3,362 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট সার্ভিস পোর্টাল</title>
+  <title>ডিজিটাল সার্ভিস পোর্টাল</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+    body { font-family: 'Hind Siliguri', sans-serif; }
+  </style>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col md:flex-row">
+<body class="bg-[#f0f4f9] text-slate-800 min-h-screen flex flex-col md:flex-row antialiased">
 
   <!-- মোবাইল হেডার -->
-  <header class="md:hidden flex items-center justify-between p-4 bg-gray-900 border-b border-gray-800">
-    <span class="font-bold text-sm text-purple-400">সার্ভিস পোর্টাল</span>
+  <header class="md:hidden flex items-center justify-between p-3.5 bg-[#4c35b5] text-white sticky top-0 z-40 shadow-md">
     <div class="flex items-center gap-2">
-      <button onclick="window.openDeposit(500)" class="bg-purple-600/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">
+      <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold text-sm">⚡</div>
+      <span class="font-bold text-sm tracking-wide">ডিজিটাল সার্ভিস</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.openDeposit(500)" class="bg-emerald-500 text-white font-bold px-3 py-1 rounded-full text-xs shadow">
         ৳ <span class="wallet-val">0.00</span> ＋
       </button>
-      <button onclick="window.toggleSidebar()" class="text-gray-400 text-lg">☰</button>
+      <button onclick="window.toggleSidebar()" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20">
+        <i class="fa-solid fa-bars text-base"></i>
+      </button>
     </div>
   </header>
 
-  <!-- সাইডবার -->
-  <aside id="sidebar" class="hidden md:flex flex-col w-64 bg-gray-900 border-r border-gray-800 p-5 space-y-6 shrink-0 fixed md:static inset-y-0 left-0 z-50">
-    <div class="flex items-center justify-between">
-      <h2 class="text-lg font-bold text-purple-400">Dashboard</h2>
-      <button onclick="window.toggleSidebar()" class="md:hidden text-gray-400">✕</button>
+  <!-- সাইডবার (২য় স্ক্রিনশটের বেগুনি থিম) -->
+  <aside id="sidebar" class="hidden md:flex flex-col w-64 bg-[#4c35b5] text-white shrink-0 fixed md:static inset-y-0 left-0 z-50 transition-all duration-300 shadow-xl overflow-y-auto">
+    <!-- লোগো এরিয়া -->
+    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-inner text-[#4c35b5] text-lg font-extrabold">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div>
+          <h2 class="font-bold text-sm leading-tight">ডিজিটাল সেবা</h2>
+          <span class="text-[10px] text-white/70">স্বয়ংক্রিয় সমাধান</span>
+        </div>
+      </div>
+      <button onclick="window.toggleSidebar()" class="md:hidden text-white/70 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
     </div>
-    <nav class="space-y-2 text-xs">
-      <a href="#" class="block bg-purple-600/20 text-purple-400 px-3 py-2 rounded-lg font-medium">🏠 ড্যাশবোর্ড হোম</a>
-      <button onclick="window.openDeposit(500)" class="w-full text-left text-gray-400 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-lg">💳 ব্যালেন্স রিচার্জ</button>
-      <button onclick="window.logout()" class="w-full text-left text-red-400 hover:bg-gray-800 px-3 py-2 rounded-lg">🚪 লগআউট</button>
-    </nav>
+
+    <!-- সাইডবার লিংকসমূহ -->
+    <div class="p-3 space-y-4 text-xs font-medium">
+      <div>
+        <p class="text-[10px] font-bold text-white/50 uppercase px-3 mb-1.5 tracking-wider">মেনু</p>
+        <div class="space-y-1">
+          <a href="#" class="flex items-center gap-2.5 bg-white text-[#4c35b5] px-3 py-2 rounded-xl font-bold shadow-sm">
+            <i class="fa-solid fa-house"></i> হোম ড্যাশবোর্ড
+          </a>
+          <button onclick="window.openDeposit(500)" class="w-full flex items-center gap-2.5 text-white/90 hover:bg-white/10 px-3 py-2 rounded-xl transition">
+            <i class="fa-solid fa-wallet text-emerald-300"></i> ব্যালেন্স রিচার্জ ＋
+          </button>
+          <a href="#servicesSection" class="flex items-center gap-2.5 text-white/90 hover:bg-white/10 px-3 py-2 rounded-xl transition">
+            <i class="fa-solid fa-layer-group text-amber-300"></i> সকল সার্ভিস তালিকা
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-bold text-white/50 uppercase px-3 mb-1.5 tracking-wider">ডেভেলপার হাব</p>
+        <div class="space-y-1">
+          <a href="#resellerSection" class="flex items-center gap-2.5 text-white/90 hover:bg-white/10 px-3 py-2 rounded-xl transition">
+            <i class="fa-solid fa-key text-yellow-300"></i> B2B রিসেলার API
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-bold text-white/50 uppercase px-3 mb-1.5 tracking-wider">অ্যাকাউন্ট</p>
+        <div class="space-y-1">
+          <button onclick="window.logout()" class="w-full flex items-center gap-2.5 text-red-300 hover:bg-white/10 px-3 py-2 rounded-xl transition">
+            <i class="fa-solid fa-right-from-bracket"></i> লগআউট
+          </button>
+        </div>
+      </div>
+    </div>
   </aside>
 
-  <!-- মূল কন্টেন্ট -->
-  <main class="flex-1 p-4 md:p-8 overflow-y-auto space-y-6">
-    <!-- ডেস্কটপ টপবার -->
-    <div class="hidden md:flex items-center justify-between bg-gray-900 p-4 rounded-2xl border border-gray-800">
-      <div>
-        <h1 class="text-sm font-semibold text-white">স্বাগতম, <span id="userName">ইউজার</span></h1>
-        <p class="text-xs text-gray-400">আপনার ডিজিটাল সার্ভিস অ্যাকাউন্ট</p>
-      </div>
-      <div onclick="window.openDeposit(500)" class="cursor-pointer bg-gray-950 border border-gray-800 px-4 py-2 rounded-xl flex items-center gap-3 hover:border-purple-500 transition" title="রিচার্জ করতে ক্লিক করুন">
-        <div class="text-right">
-          <span class="text-[11px] text-gray-400">ওয়ালেট ব্যালেন্স ➕</span>
-          <p class="text-sm font-bold text-green-400">৳ <span class="wallet-val">0.00</span></p>
+  <!-- মূল কন্টেন্ট এরিয়া -->
+  <main class="flex-1 p-4 md:p-6 overflow-y-auto space-y-5">
+
+    <!-- ২য় স্ক্রিনশট অনুযায়ী প্রিমিয়াম গ্র্যাডিয়েন্ট ব্যানার -->
+    <div class="bg-gradient-to-r from-[#2c3e50] via-[#34495e] to-[#4c35b5] text-white p-5 md:p-6 rounded-3xl shadow-lg relative overflow-hidden">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg md:text-xl font-bold">স্বাগতম, <span id="userName" class="text-amber-300">ইউজার</span> বন্ধু! 👋</h1>
+          </div>
+          <p class="text-xs text-white/80 mt-1">আপনার ডিজিটাল সার্ভিস সেন্টার - দ্রুত, নিরাপদ ও নির্ভরযোগ্য</p>
+          
+          <div class="flex flex-wrap items-center gap-2.5 mt-3 text-[11px]">
+            <span class="bg-black/25 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1.5">
+              <i class="fa-regular fa-calendar-days text-amber-300"></i> <span id="currentDate">Saturday, 05 Sept 2026</span>
+            </span>
+            <span class="bg-black/25 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1.5">
+              <i class="fa-regular fa-clock text-emerald-300"></i> <span id="liveClock">--:--:--</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="bg-white/10 border border-white/20 p-3 rounded-2xl flex items-center gap-3 backdrop-blur-md self-start md:self-auto cursor-pointer hover:bg-white/20 transition" onclick="window.openDeposit(500)">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow">
+            ৳
+          </div>
+          <div>
+            <span class="text-[10px] text-white/80 uppercase font-semibold">ওয়ালেট ব্যালেন্স</span>
+            <p class="text-base font-extrabold text-white">৳ <span class="wallet-val">0.00</span></p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- সার্ভিস সেকশন -->
-    <div>
-      <h2 class="text-sm font-semibold text-white mb-3">সকল অটো সার্ভিসসমূহ</h2>
-      <div id="serviceGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+    <!-- ৪টি স্ট্যাটস কার্ড (২য় স্ক্রিনশটের কাউন্টার স্টাইল) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-slate-800" id="statTotalOrders">০</h3>
+          <p class="text-[11px] text-slate-500 font-medium">মোট অর্ডার</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+      </div>
+
+      <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-emerald-600" id="statSuccessOrders">০</h3>
+          <p class="text-[11px] text-slate-500 font-medium">সফল অর্ডার</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+      </div>
+
+      <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-amber-500" id="statPendingOrders">০</h3>
+          <p class="text-[11px] text-slate-500 font-medium">পেন্ডিং অর্ডার</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+      </div>
+
+      <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-indigo-600">৳ <span class="wallet-val">0.00</span></h3>
+          <p class="text-[11px] text-slate-500 font-medium">উপলব্ধ ব্যালেন্স</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
     </div>
 
-    <!-- ফলাফল কার্ড -->
-    <div id="resultCard" class="hidden bg-gray-900 border border-green-500/30 p-5 rounded-2xl space-y-2">
-      <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-        <h3 class="text-xs font-semibold text-green-400">সার্ভিস প্রসেসিং সফল হয়েছে!</h3>
-        <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded">Success</span>
+    <!-- ইউটিলিটি ও অ্যাকাউন্ট অ্যাকশন বার -->
+    <div class="space-y-2">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-indigo-100 text-[#4c35b5] flex items-center justify-center text-xs">
+          <i class="fa-solid fa-gears"></i>
+        </div>
+        <h2 class="text-xs font-bold text-slate-700">ইউটিলিটি ও অ্যাকাউন্ট</h2>
       </div>
-      <p class="text-xs text-gray-300" id="resultText"></p>
-      <a id="downloadBtn" href="#" download="service_data.pdf" class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-xs px-4 py-2 rounded-xl font-medium">
-        📥 ডাউনলোড PDF কপি
+
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+        <button onclick="window.openDeposit(500)" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center flex flex-col items-center gap-1.5 group">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm group-hover:scale-105 transition">
+            <i class="fa-solid fa-circle-plus"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-700">রিচার্জ করুন</span>
+        </button>
+
+        <button onclick="alert('প্রোফাইল সেটিংস শীঘ্রই আসছে!')" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center flex flex-col items-center gap-1.5 group">
+          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm group-hover:scale-105 transition">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-700">প্রোফাইল</span>
+        </button>
+
+        <button onclick="window.logout()" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center flex flex-col items-center gap-1.5 group">
+          <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-sm group-hover:scale-105 transition">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-700">লগআউট</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ফলাফল/ডাউনলোড কার্ড -->
+    <div id="resultCard" class="hidden bg-white border border-emerald-200 p-4 rounded-2xl shadow-md space-y-2">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <h3 class="text-xs font-bold text-emerald-600 flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-check"></i> সার্ভিস প্রসেসিং সফল হয়েছে!
+        </h3>
+        <span class="text-[10px] bg-emerald-50 text-emerald-600 font-bold px-2 py-0.5 rounded">Success</span>
+      </div>
+      <p class="text-xs text-slate-600" id="resultText"></p>
+      <a id="downloadBtn" href="#" download="report.pdf" class="inline-flex items-center gap-2 bg-[#4c35b5] hover:bg-[#3d2994] text-white text-xs px-4 py-2 rounded-xl font-semibold transition shadow">
+        <i class="fa-solid fa-download"></i> ডাউনলোড PDF কপি
       </a>
     </div>
 
+    <!-- অটো সার্ভিস (২৪/৭ ইনস্ট্যান্ট) গ্রিড -->
+    <div id="servicesSection" class="space-y-2.5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-lg bg-indigo-100 text-[#4c35b5] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h2 class="text-xs font-bold text-slate-700">অটো সার্ভিস (২৪/৭ ইনস্ট্যান্ট)</h2>
+        </div>
+        <span class="text-[10px] text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full font-bold">● ২৪/৭ সক্রিয়</span>
+      </div>
+
+      <!-- ২য় স্ক্রিনশটের মতো ক্লিন লাইট কার্ড গ্রিড -->
+      <div id="serviceGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 md:gap-3"></div>
+    </div>
+
     <!-- বি২বি / ডেভেলপার এপিআই রিসেলার প্যানেল -->
-    <div class="bg-gradient-to-r from-purple-950/40 via-gray-900 to-gray-900 border border-purple-500/30 p-5 rounded-2xl space-y-4">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div id="resellerSection" class="bg-white border border-slate-100 p-5 rounded-3xl shadow-sm space-y-3">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
-          <span class="text-[10px] bg-purple-500/20 text-purple-400 font-bold px-2 py-0.5 rounded uppercase tracking-wider">B2B Developer Hub</span>
-          <h3 class="text-sm font-bold text-white mt-1">রিসেলার এপিআই লাইসেন্স কিনুন</h3>
-          <p class="text-xs text-gray-400">আপনার নিজস্ব ওয়েবসাইট বা টেলিগ্রাম বট পরিচালনার জন্য লাইসেন্স তৈরি করুন।</p>
+          <span class="text-[10px] bg-indigo-50 text-[#4c35b5] font-bold px-2.5 py-0.5 rounded-full uppercase">B2B Developer Hub</span>
+          <h3 class="text-sm font-bold text-slate-800 mt-1">রিসেলার এপিআই লাইসেন্স কিনুন</h3>
+          <p class="text-xs text-slate-500">আপনার নিজস্ব ওয়েবসাইট বা টেলিগ্রাম বটে এই সার্ভিসগুলো বিক্রি করার জন্য লাইসেন্স তৈরি করুন।</p>
         </div>
         <div class="text-right">
-          <span class="text-xs text-purple-400 font-bold">লাইসেন্স ফি: ৳ ১৫,০০০</span>
+          <span class="text-xs text-[#4c35b5] font-extrabold bg-indigo-50 px-3 py-1.5 rounded-xl inline-block">লাইসেন্স ফি: ৳ ১৫,০০০</span>
         </div>
       </div>
 
-      <div id="buyApiKeyBox" class="border-t border-gray-800 pt-3 flex items-center justify-between">
-        <p class="text-xs text-gray-400">পর্যাপ্ত ব্যালেন্স থাকলে এক ক্লিকে লাইসেন্স সক্রিয় করুন।</p>
-        <button onclick="window.buyResellerAccess()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded-xl transition">
-          🔑 ৳১৫,০০০ দিয়ে কি কিনুন
+      <div id="buyApiKeyBox" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+        <p class="text-xs text-slate-500">ওয়ালেটে পর্যাপ্ত ব্যালেন্স থাকলে এক ক্লিকে লাইসেন্স সক্রিয় করুন।</p>
+        <button onclick="window.buyResellerAccess()" class="bg-[#4c35b5] hover:bg-[#3d2994] text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow">
+          🔑 ৳১৫,০০০ দিয়ে কি কিনুন
         </button>
       </div>
 
-      <div id="resellerKeyBox" class="hidden border-t border-gray-800 pt-3 space-y-3">
-        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl flex items-center justify-between">
+      <div id="resellerKeyBox" class="hidden space-y-2.5 pt-1">
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex items-center justify-between">
           <div>
-            <span class="text-[10px] text-gray-500 block">আপনার কাস্টম এপিআই কি:</span>
-            <span id="userApiKey" class="font-mono text-xs font-semibold text-green-400">sk_live_...</span>
+            <span class="text-[10px] text-slate-400 block font-semibold">আপনার প্রাইভেট API Key:</span>
+            <span id="userApiKey" class="font-mono text-xs font-bold text-emerald-600">sk_live_...</span>
           </div>
-          <button onclick="window.copyApiKey()" class="text-xs bg-gray-800 text-purple-300 px-3 py-1.5 rounded-lg border border-gray-700">কপি কি</button>
+          <button onclick="window.copyApiKey()" class="text-xs bg-white text-slate-700 font-bold px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm hover:bg-slate-100 transition">
+            <i class="fa-regular fa-copy"></i> কপি
+          </button>
         </div>
-        <div class="bg-gray-950/60 p-3 rounded-xl border border-gray-850 text-[11px] text-gray-400 space-y-1">
-          <p class="font-semibold text-gray-300">API Endpoint:</p>
-          <p class="font-mono text-purple-300">POST /api/v1/reseller</p>
-          <p>Header: <span class="font-mono text-gray-300">x-api-key: [আপনার_API_Key]</span></p>
+        <div class="bg-slate-50 p-3 rounded-2xl text-[11px] text-slate-500 space-y-1">
+          <p class="font-bold text-slate-700">API Endpoint:</p>
+          <p class="font-mono text-[#4c35b5]">POST /api/v1/reseller</p>
+          <p>Header: <span class="font-mono text-slate-700">x-api-key: [আপনার_API_Key]</span></p>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- রিচার্জ গেটওয়ে মডাল -->
-  <div id="depositModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-sm p-5 relative">
-      <button onclick="window.closeDeposit()" class="absolute top-3 right-3 text-gray-400 hover:text-white">✕</button>
+  <!-- রিচার্জ গেটওয়ে মডাল -->
+  <div id="depositModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl w-full max-w-sm p-5 shadow-2xl border border-slate-100 relative">
+      <button onclick="window.closeDeposit()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">✕</button>
 
-      <div id="depositFormStep">
-        <h3 class="text-sm font-bold text-white mb-1">ব্যালেন্স রিচার্জ করুন</h3>
-        <p class="text-[11px] text-gray-400 mb-3">প্যাকেজ নির্বাচন করে Send Money সম্পন্ন করুন।</p>
-
-        <div class="grid grid-cols-3 gap-2 mb-3">
-          <button type="button" onclick="window.setPkg(500)" class="pkg-opt border border-purple-500 bg-purple-600/20 text-purple-300 py-1.5 rounded-lg text-xs font-bold" data-amt="500">৳ ৫০০</button>
-          <button type="button" onclick="window.setPkg(1000)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1000">৳ ১০০০</button>
-          <button type="button" onclick="window.setPkg(1500)" class="pkg-opt border border-gray-700 text-gray-400 py-1.5 rounded-lg text-xs font-bold" data-amt="1500">৳ ১৫০০</button>
+      <div id="depositFormStep" class="space-y-3">
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">ওয়ালেট ব্যালেন্স রিচার্জ</h3>
+          <p class="text-[11px] text-slate-500">প্যাকেজ নির্বাচন করে Send Money সম্পন্ন করুন।</p>
         </div>
 
-        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl mb-3 text-xs space-y-1">
-          <div class="flex justify-between text-gray-400">
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="window.setPkg(500)" class="pkg-opt border-2 border-[#4c35b5] bg-indigo-50 text-[#4c35b5] py-1.5 rounded-xl text-xs font-bold transition" data-amt="500">৳ ৫০০</button>
+          <button type="button" onclick="window.setPkg(1000)" class="pkg-opt border-2 border-slate-200 text-slate-600 py-1.5 rounded-xl text-xs font-bold transition" data-amt="1000">৳ ১০০০</button>
+          <button type="button" onclick="window.setPkg(1500)" class="pkg-opt border-2 border-slate-200 text-slate-600 py-1.5 rounded-xl text-xs font-bold transition" data-amt="1500">৳ ১৫০০</button>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl text-xs space-y-1.5">
+          <div class="flex justify-between text-slate-500">
             <span>বিকাশ/নগদ (Personal):</span>
-            <span class="text-purple-400 font-bold">Send Money</span>
+            <span class="text-[#4c35b5] font-bold">Send Money</span>
           </div>
-          <div class="flex justify-between items-center bg-gray-900 p-2 rounded">
-            <span id="adminNumber" class="font-mono text-white text-xs">017XXXXXXXX</span>
-            <button onclick="window.copyAdminNumber()" class="text-purple-400 hover:text-purple-300 text-xs">কপি</button>
+          <div class="flex justify-between items-center bg-white p-2 rounded-xl border border-slate-200">
+            <span id="adminNumber" class="font-mono text-slate-800 font-bold text-xs">017XXXXXXXX</span>
+            <button onclick="window.copyAdminNumber()" class="text-[#4c35b5] font-bold text-xs hover:underline">কপি</button>
           </div>
-          <p class="text-[11px] text-gray-500">পরিশোধের পরিমাণ: ৳ <span id="payAmt">500</span></p>
+          <p class="text-[11px] text-slate-500">পরিশোধের পরিমাণ: <span class="text-emerald-600 font-bold">৳ <span id="payAmt">500</span></span></p>
         </div>
 
         <form onsubmit="window.submitDeposit(event)" class="space-y-2 text-xs">
           <div>
-            <label class="text-gray-400 block mb-1">যে নম্বর থেকে টাকা পাঠাবেন</label>
-            <input id="senderNum" type="text" placeholder="01XXXXXXXXX" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white outline-none">
+            <label class="text-slate-600 font-medium block mb-1">প্রেরকের নম্বর</label>
+            <input id="senderNum" type="text" placeholder="01XXXXXXXXX" required class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl text-slate-800 outline-none focus:border-[#4c35b5]">
           </div>
           <div>
-            <label class="text-gray-400 block mb-1">TrxID</label>
-            <input id="trxId" type="text" placeholder="TrxID দিন" required class="w-full bg-gray-950 border border-gray-800 p-2 rounded-lg text-white uppercase outline-none">
+            <label class="text-slate-600 font-medium block mb-1">TrxID</label>
+            <input id="trxId" type="text" placeholder="TrxID দিন" required class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl text-slate-800 uppercase outline-none focus:border-[#4c35b5]">
           </div>
-          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition">পেমেন্ট নিশ্চিত করুন</button>
+          <button type="submit" class="w-full bg-[#4c35b5] hover:bg-[#3d2994] text-white font-bold py-2.5 rounded-xl transition shadow">
+            পেমেন্ট নিশ্চিত করুন
+          </button>
         </form>
       </div>
 
-      <div id="depositPendingStep" class="hidden text-center py-4 space-y-3">
-        <div class="w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <h4 class="text-xs font-bold text-yellow-400">পেমেন্ট রিকোয়েস্ট পেন্ডিং আছে</h4>
-        <p class="text-[11px] text-gray-400">ভেরিফিকেশন পাঠানো হয়েছে। অ্যাডমিন কনফার্ম করলেই ব্যালেন্স যুক্ত হবে।</p>
-        <button onclick="window.closeDeposit()" class="w-full bg-gray-800 text-gray-300 text-xs py-1.5 rounded-lg">পপআপ বন্ধ করুন</button>
+      <div id="depositPendingStep" class="hidden text-center py-5 space-y-3">
+        <div class="w-10 h-10 border-3 border-[#4c35b5] border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <h4 class="text-xs font-bold text-slate-800">পেমেন্ট রিকোয়েস্ট পেন্ডিং আছে</h4>
+        <p class="text-[11px] text-slate-500">অ্যাডমিন কনফার্ম করলেই স্বয়ংক্রিয়ভাবে ওয়ালেটে ব্যালেন্স যুক্ত হবে।</p>
+        <button onclick="window.closeDeposit()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs py-2 rounded-xl font-bold">
+          পপআপ বন্ধ করুন
+        </button>
       </div>
     </div>
   </div>
 
   <!-- ইনফো মডাল -->
-  <div id="infoModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xs p-5 relative">
-      <button onclick="window.closeInfo()" class="absolute top-3 right-3 text-gray-400">✕</button>
-      <h3 id="infoTitle" class="text-xs font-bold text-white mb-1"></h3>
-      <span id="infoPrice" class="text-[11px] text-purple-400 font-semibold block mb-2"></span>
-      <p id="infoBody" class="text-xs text-gray-300 bg-gray-950 p-3 rounded-lg border border-gray-800"></p>
+  <div id="infoModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl w-full max-w-xs p-5 shadow-2xl border border-slate-100 relative">
+      <button onclick="window.closeInfo()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-700">✕</button>
+      <h3 id="infoTitle" class="text-xs font-bold text-slate-800 mb-1"></h3>
+      <span id="infoPrice" class="text-[11px] text-[#4c35b5] font-bold block mb-2"></span>
+      <p id="infoBody" class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100"></p>
     </div>
   </div>
 
   <script>
+    // লাইভ ঘড়ি
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+    }, 1000);
+
     const SUPABASE_URL = "https://ddetccrekmneruzipokl.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZXRjY3Jla21uZXJ1emlwb2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MjY5NzEsImV4cCI6MjEwNDEwMjk3MX0.OKWuAKrqzc2JM9jeZSvtGg1BOmLEqF3-MLl_1QliAu8";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // ৪টি আইকন সমৃদ্ধ সার্ভিস তালিকা (২য় স্ক্রিনশটের স্টাইল)
     const servicesList = [
-      { id: 1, name: "সার্ভার কপি ভেরিফাই", price: 500, active: true, desc: "সার্ভার কপির অফিসিয়াল ডেটা ইনস্ট্যান্ট যাচাই ও রিপোর্ট ডাউনলোড।" },
-      { id: 2, name: "টিন সার্টিফিকেট যাচাই", price: 500, active: true, desc: "ই-টিন সংক্রান্ত ডেটা চেক এবং ভেরিফিকেশন স্লিপ তৈরি।" },
-      { id: 3, name: "আইডি কার্ড ডেটা ভিউ", price: 1000, active: true, desc: "স্মার্টকার্ড সংক্রান্ত ডেটাবেজ মিলকরণ ও ভিউ।" },
-      { id: 4, name: "বায়োমেট্রিক রেকর্ড চেক", price: 1000, active: true, desc: "সিস্টেমের বায়োমেট্রিক স্ট্যাটাস অনুসন্ধান।" },
-      { id: 5, name: "পাসপোর্ট ফাইল আপডেট", price: 500, active: true, desc: "পাসপোর্ট ভেরিফিকেশন ও ডেলিভারি অগ্রগতি যাচাই।" },
-      { id: 6, name: "ড্রাইভিং লাইসেন্স ভেরিফাই", price: 1500, active: true, desc: "বিআরটিএ লাইসেন্স সংক্রান্ত ডেটাবেজ অনুসন্ধান।" },
-      { id: 7, name: "ট্রেড লাইসেন্স ভেরিফিকেশন", price: 1000, active: true, desc: "ব্যবসা ও ট্রেড লাইসেন্স অনলাইন রেকর্ড চেক।" },
-      { id: 8, name: "জন্ম নিবন্ধন ডেটা চেক", price: 500, active: true, desc: "অনলাইন জন্ম নিবন্ধন তথ্যাদি যাচাই।" },
-      { id: 9, name: "ল্যান্ড রেকর্ড ভেরিফাই", price: 1500, active: true, desc: "অনলাইন ভূমি রেকর্ড ও খতিয়ান সংক্রান্ত ডেটা সার্চ।" },
-      { id: 10, name: "ক্লিয়ারেন্স ফাইল রিপোর্ট", price: 1500, active: true, desc: "ভেরিফিকেশন ফাইলের সর্বশেষ স্ট্যাটাস চেকিং।" }
+      { id: 1, name: "সার্ভার কপি", icon: "fa-id-card", price: 500, active: true, desc: "সার্ভার কপির অফিসিয়াল ডেটা ইনস্ট্যান্ট যাচাই ও রিপোর্ট ডাউনলোড।" },
+      { id: 2, name: "ই-টিন সার্টিফিকেট", icon: "fa-file-lines", price: 500, active: true, desc: "ই-টিন সংক্রান্ত ডেটা চেক এবং ভেরিফিকেশন স্লিপ তৈরি।" },
+      { id: 3, name: "এন আইডি মেক", icon: "fa-address-card", price: 1000, active: true, desc: "স্মার্টকার্ড সংক্রান্ত ডেটাবেজ মিলকরণ ও ভিউ।" },
+      { id: 4, name: "সাইন টু সার্ভার", icon: "fa-signature", price: 1000, active: true, desc: "সিস্টেমের বায়োমেট্রিক স্ট্যাটাস অনুসন্ধান।" },
+      { id: 5, name: "জন্ম নিবন্ধন", icon: "fa-baby", price: 500, active: true, desc: "অনলাইন জন্ম নিবন্ধন তথ্যাদি যাচাই।" },
+      { id: 6, name: "স্মার্ট কার্ড", icon: "fa-credit-card", price: 1500, active: true, desc: "বিআরটিএ ও স্মার্ট কার্ড ডেটাবেজ অনুসন্ধান।" },
+      { id: 7, name: "ট্রেড লাইসেন্স", icon: "fa-briefcase", price: 1000, active: true, desc: "ব্যবসা ও ট্রেড লাইসেন্স অনলাইন রেকর্ড চেক।" },
+      { id: 8, name: "পাসপোর্ট স্ট্যাটাস", icon: "fa-passport", price: 500, active: true, desc: "পাসপোর্ট ভেরিফিকেশন ও ডেলিভারি অগ্রগতি যাচাই।" },
+      { id: 9, name: "ল্যান্ড রেকর্ড", icon: "fa-landmark", price: 1500, active: true, desc: "অনলাইন ভূমি রেকর্ড ও খতিয়ান সংক্রান্ত ডেটা সার্চ।" },
+      { id: 10, name: "ক্লিয়ারেন্স ফাইল", icon: "fa-shield-halved", price: 1500, active: true, desc: "ভেরিফিকেশন ফাইলের সর্বশেষ স্ট্যাটাস চেকিং।" }
     ];
 
     for(let i = 11; i <= 40; i++) {
       servicesList.push({
         id: i,
         name: `আসন্ন সার্ভিস ${i}`,
+        icon: "fa-clock",
         price: 500,
         active: false,
         desc: "এই সার্ভিসটি শীঘ্রই চালু করা হবে।"
@@ -195,7 +369,7 @@
     let selectedPkg = 500;
     let currentUser = null;
 
-    // ১. সার্ভিস রেন্ডার ফাংশন
+    // কার্ড রেন্ডারিং (২য় স্ক্রিনশটের মতো হোয়াইট বক্স ও সফট ডিজাইন)
     function renderServices() {
       document.querySelectorAll(".wallet-val").forEach(el => el.innerText = userBalance.toFixed(2));
       const grid = document.getElementById("serviceGrid");
@@ -205,24 +379,26 @@
       servicesList.forEach(srv => {
         const locked = !srv.active || userBalance < srv.price;
         const card = document.createElement("div");
-        card.className = `p-3 rounded-xl border flex flex-col justify-between ${locked ? 'bg-gray-900/40 border-gray-800' : 'bg-gray-900 border-gray-700 hover:border-purple-500'}`;
+        
+        // ২য় স্ক্রিনশটের মতো ক্লিন ডিজাইন
+        card.className = `bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between items-center text-center relative group`;
         card.innerHTML = `
-          <div>
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-xs">${srv.active ? '⚡' : '⏳'}</span>
-              <div class="flex items-center gap-1">
-                <button onclick="window.showInfo(${srv.id})" class="text-[10px] bg-gray-800 border border-gray-700 px-1 rounded text-gray-400">ⓘ</button>
-                <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${locked ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}">
-                  ${locked ? 'লকড 🔒' : 'আনলক 🔓'}
-                </span>
-              </div>
-            </div>
-            <h4 class="text-xs font-semibold text-white">${srv.name}</h4>
+          <div class="absolute top-2 right-2 flex items-center gap-1">
+            <button onclick="window.showInfo(${srv.id})" class="text-[9px] w-4 h-4 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center">ⓘ</button>
+            <span class="w-2 h-2 rounded-full ${locked ? 'bg-rose-400' : 'bg-emerald-400'}"></span>
           </div>
-          <div class="mt-3 pt-2 border-t border-gray-800 flex justify-between items-center">
-            <span class="text-xs text-purple-400 font-bold">৳ ${srv.price}</span>
-            <button onclick="window.runService(${srv.id})" class="text-[10px] px-2 py-1 rounded ${locked ? 'bg-gray-800 text-gray-400' : 'bg-purple-600 text-white'}">
-              ${locked ? 'রিচার্জ' : 'ব্যবহার করুন'}
+
+          <div class="mt-2 flex flex-col items-center">
+            <div class="w-10 h-10 rounded-xl ${locked ? 'bg-slate-50 text-slate-400' : 'bg-indigo-50 text-[#4c35b5]'} flex items-center justify-center text-base mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid ${srv.icon}"></i>
+            </div>
+            <h4 class="text-[11px] font-bold text-slate-800 leading-tight">${srv.name}</h4>
+            <span class="text-[10px] font-extrabold text-[#4c35b5] mt-0.5">৳ ${srv.price}</span>
+          </div>
+
+          <div class="mt-3 w-full">
+            <button onclick="window.runService(${srv.id})" class="w-full text-[10px] font-bold py-1.5 rounded-xl transition ${locked ? 'bg-slate-100 text-slate-400 hover:bg-slate-200' : 'bg-[#4c35b5] hover:bg-[#3d2994] text-white shadow'}">
+              ${locked ? '🔒 লকড' : 'ব্যবহার করুন'}
             </button>
           </div>
         `;
@@ -230,7 +406,7 @@
       });
     }
 
-    // উইন্ডো ফাংশনসমূহ বাইন্ডিং
+    // উইন্ডো হ্যান্ডলারসমূহ
     window.openDeposit = function(amt) {
       window.setPkg(amt);
       document.getElementById("depositFormStep").classList.remove("hidden");
@@ -251,13 +427,13 @@
       document.getElementById("payAmt").innerText = amt;
       document.querySelectorAll(".pkg-opt").forEach(btn => {
         const isMatch = parseInt(btn.getAttribute("data-amt")) === amt;
-        btn.className = `pkg-opt border py-1.5 rounded-lg text-xs font-bold ${isMatch ? 'border-purple-500 bg-purple-600/20 text-purple-300' : 'border-gray-700 text-gray-400'}`;
+        btn.className = `pkg-opt border-2 py-1.5 rounded-xl text-xs font-bold transition ${isMatch ? 'border-[#4c35b5] bg-indigo-50 text-[#4c35b5]' : 'border-slate-200 text-slate-600'}`;
       });
     };
 
     window.copyAdminNumber = function() {
       navigator.clipboard.writeText(document.getElementById("adminNumber").innerText);
-      alert("নম্বর কপি হয়েছে!");
+      alert("নম্বর কপি হয়েছে!");
     };
 
     window.showInfo = function(id) {
@@ -289,7 +465,7 @@
           })
         });
       } catch (err) {
-        console.error("Deposit API error:", err);
+        console.error(err);
       }
 
       const timer = setInterval(async () => {
@@ -299,7 +475,7 @@
           userBalance += selectedPkg;
           renderServices();
           window.closeDeposit();
-          alert("অভিনন্দন! আপনার রিচার্জ অনুমোদন পেয়েছে।");
+          alert("অভিনন্দন! আপনার রিচার্জ অনুমোদন পেয়েছে।");
         }
       }, 4000);
     };
@@ -320,21 +496,22 @@
         if (data.success) {
           userBalance -= srv.price;
           renderServices();
-          document.getElementById("resultText").innerText = `${srv.name} সম্পন্ন হয়েছে। ৳${srv.price} ব্যালেন্স থেকে কাটা হয়েছে।`;
+          document.getElementById("resultText").innerText = `${srv.name} সম্পন্ন হয়েছে। ৳${srv.price} ব্যালেন্স থেকে কাটা হয়েছে।`;
           document.getElementById("downloadBtn").href = data.pdfUrl || "#";
           document.getElementById("resultCard").classList.remove("hidden");
+          document.getElementById("statSuccessOrders").innerText = Number(document.getElementById("statSuccessOrders").innerText) + 1;
         } else {
-          alert(data.error || "সার্ভিস সম্পন্ন করা যায়নি।");
+          alert(data.error || "সার্ভিসটি সম্পন্ন করা যায়নি।");
         }
       } catch (err) {
-        alert("সার্ভার রিকোয়েস্টে সমস্যা হয়েছে।");
+        alert("সার্ভার রিকোয়েস্টে সমস্যা হয়েছে।");
       }
     };
 
     window.buyResellerAccess = async function() {
       const FEE = 15000;
       if (userBalance < FEE) {
-        alert("রিসেলার লাইসেন্স কিনতে নূন্যতম ১৫,০০০ টাকা ওয়ালেট ব্যালেন্স থাকতে হবে।");
+        alert("রিসেলার লাইসেন্স কিনতে নূন্যতম ১৫,০০০ টাকা ব্যালেন্স থাকতে হবে।");
         window.openDeposit(FEE);
         return;
       }
@@ -347,7 +524,7 @@
 
     window.copyApiKey = function() {
       navigator.clipboard.writeText(document.getElementById("userApiKey").innerText);
-      alert("API Key কপি হয়েছে!");
+      alert("API Key কপি হয়েছে!");
     };
 
     window.toggleSidebar = function() {
@@ -359,9 +536,7 @@
       window.location.replace("login.html");
     };
 
-    // ২. ড্যাশবোর্ড ডাটা লোডার
     async function initDashboard() {
-      // সার্ভিস গ্রিডকে তাৎক্ষণিক লোড করানো
       renderServices();
 
       try {
@@ -381,15 +556,13 @@
             document.getElementById("resellerKeyBox").classList.remove("hidden");
             document.getElementById("userApiKey").innerText = profile.api_key;
           }
-          // ব্যালেন্স আপডেট করে পুনরায় গ্রিড রিফ্রেশ
           renderServices();
         }
       } catch (e) {
-        console.error("Dashboard Init Error:", e);
+        console.error(e);
       }
     }
 
-    // স্টার্ট করা
     initDashboard();
   </script>
 </body>
